@@ -1,5 +1,4 @@
-using Aspire.Hosting.Lifecycle;
-using Microsoft.Build.Framework;
+﻿using Aspire.Hosting.Lifecycle;
 using Microsoft.Extensions.Logging;
 using Microsoft.SqlServer.Dac;
 
@@ -19,7 +18,7 @@ public static class Extensions
 
 public class DatabaseProjectAnnotation : IResourceAnnotation
 {
-    public IResourceBuilder<ProjectResource> Project { get; set; }
+    public IResourceBuilder<ProjectResource> Project { get; set; } = null!;
 }
 
 public class DeployDatabaseProjectLifecycleHook : IDistributedApplicationLifecycleHook
@@ -42,7 +41,25 @@ public class DeployDatabaseProjectLifecycleHook : IDistributedApplicationLifecyc
                 dacServices.Message += (sender, args) => _logger.LogInformation(args.Message.ToString());
 
                 var projectPath = annotation.Project.Resource.GetProjectMetadata().ProjectPath;
-                var dacpacPath = Path.Combine(Path.GetDirectoryName(projectPath), "bin", "Debug", "netstandard2.0", Path.GetFileNameWithoutExtension(projectPath) + ".dacpac");
+                if (projectPath == null)
+                {
+                    throw new InvalidOperationException("Project path is not set.");
+                }
+
+                var projectDirectory = Path.GetDirectoryName(projectPath);
+
+                if (projectDirectory == null)
+                {
+                    throw new InvalidOperationException($"Project path '{projectPath}' does not have a directory.");
+                }
+
+                var dacpacPath = Path.Combine(projectDirectory, "bin", "Debug", "netstandard2.0", Path.GetFileNameWithoutExtension(projectPath) + ".dacpac");
+
+                if (!File.Exists(dacpacPath))
+                {
+                    throw new InvalidOperationException($"Dacpac file '{dacpacPath}' does not exist.");
+                }
+
                 var dacpacPackage = DacPackage.Load(dacpacPath, DacSchemaModelStorageType.Memory);
                 dacServices.Deploy(dacpacPackage, database.Name, true, new DacDeployOptions(), cancellationToken);
             }
