@@ -13,6 +13,7 @@ If you're looking for a video introduction, please watch this [dotnetFlix episod
 
 - [Introducing MSBuild.Sdk.SqlProj](https://jmezach.github.io/post/introducing-msbuild-sdk-sqlproj/)
 - [An update on MSBuild.Sdk.SqlProj](https://jmezach.github.io/post/update-on-msbuild-sdk-sqlproj/)
+- [Publishing SQL Database Projects as Container Images with MSBuild.Sdk.SqlProj](docs/container-publishing.md)
 
 ## Code of conduct
 
