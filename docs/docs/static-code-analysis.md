@@ -11,13 +11,11 @@ There is support for running static code analysis during build. The SDK includes
 Static code analysis can be enabled by adding the `RunSqlCodeAnalysis` property to the project file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
     <CodeAnalysisRules>-SqlServer.Rules.SRD0006;-SqlServer.Rules.SRN*</CodeAnalysisRules>
   </PropertyGroup>
-</Project>
 ```
 
 > [!NOTE]
@@ -47,12 +45,10 @@ Any rule violations found during analysis are reported as build warnings.
 Individual rule violations or groups of rules can be configured to be reported as build errors as shown below.
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
     <CodeAnalysisRules>+!SqlServer.Rules.SRN0005;+!SqlServer.Rules.SRD*</CodeAnalysisRules>
   </PropertyGroup>
-</Project>
 ```
 
 ## Use additional rule packages
@@ -61,7 +57,7 @@ We know of the following public rules NuGet package that you can add to your pro
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="ErikEJ.DacFX.SqlServer.Rules" Version="5.0.0">
+  <PackageReference Include="ErikEJ.DacFX.SqlServer.Rules" Version="5.1.2">
     <PrivateAssets>all</PrivateAssets>
     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
   </PackageReference>

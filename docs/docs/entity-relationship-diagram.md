@@ -5,11 +5,9 @@
 The SDK supports generating an Entity Relationship diagram from your project. To enable this, add the `GenerateEntityRelationshipDiagram` property to your project file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <GenerateEntityRelationshipDiagram>True</GenerateEntityRelationshipDiagram>
   </PropertyGroup>
-</Project>
 ```
 
 ## Generated output
@@ -24,12 +22,10 @@ The generated diagram is saved in the project directory. The diagram is generate
 If you only want a subset of tables in the diagram, add an `EntityRelationshipDiagramConfigFile` property that points to a JSON file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <GenerateEntityRelationshipDiagram>True</GenerateEntityRelationshipDiagram>
     <EntityRelationshipDiagramConfigFile>erdiagram.json</EntityRelationshipDiagramConfigFile>
   </PropertyGroup>
-</Project>
 ```
 
 Example `erdiagram.json`:
@@ -49,7 +45,6 @@ Table names can be schema-qualified, such as `dbo.Customer`, or unqualified, suc
 To generate multiple diagrams, define multiple config files in an item group:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <GenerateEntityRelationshipDiagram>True</GenerateEntityRelationshipDiagram>
   </PropertyGroup>
@@ -58,7 +53,6 @@ To generate multiple diagrams, define multiple config files in an item group:
     <EntityRelationshipDiagramConfigFile Include="Configs\sales_erdiagram.json" />
     <EntityRelationshipDiagramConfigFile Include="Configs\hr_erdiagram.json" />
   </ItemGroup>
-</Project>
 ```
 
 Each config file can optionally contain `schemas`, `tables`, and `outputFileName`:

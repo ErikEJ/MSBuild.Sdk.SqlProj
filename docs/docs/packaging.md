@@ -7,12 +7,10 @@
 You'll need to set the `PackageProjectUrl` property in the `.csproj` like this:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     ...
     <PackageProjectUrl>your-project-url</PackageProjectUrl>
   </PropertyGroup>
-</Project>
 ```
 
 Other metadata for the package can be controlled by using the [documented](https://docs.microsoft.com/dotnet/core/tools/csproj#nuget-metadata-properties) properties in your project file.

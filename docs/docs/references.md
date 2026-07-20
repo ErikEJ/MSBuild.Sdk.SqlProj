@@ -7,15 +7,9 @@
 ### Basic package references
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.1.0" />
   </ItemGroup>
-</Project>
 ```
 
 It will assume that the `.dacpac` file is inside the `tools` folder of the referenced package and that it has the same name as the NuGet package. Referenced packages that do not adhere to this convention will be silently ignored. However, you have the ability to override this convention by using the `DacpacName` attribute on the `PackageReference`. For example:
@@ -23,15 +17,9 @@ It will assume that the `.dacpac` file is inside the `tools` folder of the refer
 ### Override the dacpac name
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.1.0" DacpacName="SomeOtherDacpac" />
   </ItemGroup>
-</Project>
 ```
 
 This will add a reference to the `tools\SomeOtherDacpac.dacpac` file inside the `MyDatabasePackage` package. Note that if that file doesn't exist within the package, the package reference will still be silently ignored. However, the build will most likely fail if your project actually references objects from the reference package.
@@ -41,15 +29,9 @@ By default, the package reference is treated as being part of the same database.
 ### Reference another database
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.1.0" DatabaseVariableLiteralValue="SomeOtherDatabase" />
   </ItemGroup>
-</Project>
 ```
 
 In this scenario you can access the objects defined by `MyDatabasePackage` by using the `[SomeOtherDatabase].[<schema>].[<object>]` syntax.
@@ -62,11 +44,6 @@ You can also use SQLCMD variables to set references, similar to the behavior of 
 ### Use SQLCMD variables
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.1.0" DatabaseSqlCmdVariable="SomeOtherDatabase" ServerSqlCmdVariable="SomeOtherServer"/>
   </ItemGroup>
@@ -81,7 +58,6 @@ You can also use SQLCMD variables to set references, similar to the behavior of 
       <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
-</Project>
 ```
 
 In this scenario you can access the objects defined by `MyDatabasePackage` by using the `[$(SomeOtherServer)].[$(SomeOtherDatabase)].[<schema>].[<object>]` syntax.
@@ -109,15 +85,9 @@ Similar to package references you can also reference another project by using a 
 ### Basic project references
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="../MyOtherProject/MyOtherProject.csproj" />
   </ItemGroup>
-</Project>
 ```
 
 This will ensure that `MyOtherProject` is built first and the resulting `.dacpac` will be referenced by this project. This means you can use the objects defined in the other project within the scope of this project. If the other project is representing an entirely different database, you can also use `DatabaseVariableLiteralValue` or SQLCMD variables on the `ProjectReference` similar to `PackageReference`:
@@ -125,11 +95,6 @@ This will ensure that `MyOtherProject` is built first and the resulting `.dacpac
 ### Reference another database
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="../MyOtherProject/MyOtherProject.csproj" DatabaseVariableLiteralValue="SomeOtherDatabase" />
   </ItemGroup>
@@ -147,8 +112,6 @@ This will ensure that `MyOtherProject` is built first and the resulting `.dacpac
       <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
-
-</Project>
 ```
 
 > [!NOTE]
@@ -159,15 +122,9 @@ This will ensure that `MyOtherProject` is built first and the resulting `.dacpac
 Microsoft has released NuGet packages containing the definitions of the `master` and `msdb` databases. This is useful if you want to reference objects from those databases within your own projects without getting warnings. To reference these, you'll need to use the `DacpacName` feature for package references described above. For example:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.SqlServer.Dacpacs.Master" Version="160.2.7" DacpacName="master" DatabaseVariableLiteralValue="master" />
   </ItemGroup>
-</Project>
 ```
 
 The above example references the `master` database from the [Microsoft.SqlServer.Dacpacs.Master](https://www.nuget.org/packages/Microsoft.SqlServer.Dacpacs.Master) NuGet package. Please note that there are different major versions of that package for different versions of SQL Server. It is recommended to reference the most recent minor/patch version of the package as the `SqlServerVersion` you are targeting with your project, as seen in the example above.
@@ -180,11 +137,6 @@ In order to solve circular references between databases that may have been incor
 `SuppressMissingDependenciesErrors` to both [Package References](#package-references) and [Project References](#project-references):
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.1.0" DatabaseVariableLiteralValue="SomeDatabase" SuppressMissingDependenciesErrors="True"/>
   </ItemGroup>
@@ -192,5 +144,4 @@ In order to solve circular references between databases that may have been incor
   <ItemGroup>
     <ProjectReference Include="../MyOtherProject/MyOtherProject.csproj" DatabaseVariableLiteralValue="SomeOtherDatabase" SuppressMissingDependenciesErrors="True"/>
   </ItemGroup>
-</Project>
 ```
