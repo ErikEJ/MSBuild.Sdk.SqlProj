@@ -20,7 +20,7 @@ Microsoft has published [this comparison table](https://learn.microsoft.com/en-u
 | Cross platform build | Yes | Yes | No | Yes |
 | Publish project to existing server | Yes | Yes | Yes | Yes |
 | Publish project to a local development instance | Yes<sup>1</sup> | Yes<sup>2</sup> | Yes<sup>3</sup> | Yes<sup>3</sup> |
-| Publish options/properties | Yes | No | Yes | Yes (in .csproj) |
+| Publish options/properties | Yes | Yes | Yes | Yes (in .csproj) |
 | Target platform can be updated | Yes | Yes | Yes | Yes |
 | SQLCMD variables | Yes | Yes | Yes | Yes |
 | Project references | Yes | Yes | Yes | Yes |
@@ -31,18 +31,18 @@ Microsoft has published [this comparison table](https://learn.microsoft.com/en-u
 | SQL files can be added by placing in project folder | Yes | Yes | No | Yes |
 | SQL files can be excluded from build | Yes | Yes | Yes | Yes |
 | Pre-deployment and post-deployment scripts | Yes | Yes | Yes | Yes |
-| New object templates | Yes<sup>4</sup> | Yes<sup>4</sup> | Yes | Yes<sup>4</sup> |
+| New object templates | Yes | Yes | Yes | Yes<sup>4</sup> |
 | Project files can be organized into folders | Yes | Yes | Yes | Yes |
-| Schema comparison project to database | Yes | No | Yes | Yes |
-| Schema comparison database to project | Yes | No | Yes | Yes |
+| Schema comparison project to database | Yes | Yes | Yes | Yes |
+| Schema comparison database to project | Yes | Yes | Yes | Yes |
 | Graphical table designer | No | No | Yes | No |
-| Code analysis - enable/disable rules GUI | Yes | No | Yes | Yes |
+| Code analysis - enable/disable rules GUI | Yes | Yes | Yes | Yes |
 | Code analysis - extensive GUI with doc links and more | No | No | No | Yes |
 | Project properties - build output settings | No | No | Yes | No |
 | Project properties - database settings GUI | No | No | Yes | No |
 | Project run code analysis | Yes | Yes | Yes | Yes |
-| Object renaming and refactoring | No | No | Yes | No |
-| Intellisense provided in database files from project model | No | No | Yes | No |
+| Object renaming and refactoring | Yes | No | Yes | No |
+| Intellisense provided in database files from project model | Yes | No | Yes | No |
 | Generate Create script during build | No | No | No | Yes |
 | Generate E-R diagrams during build | No | No | No | Yes |
 
