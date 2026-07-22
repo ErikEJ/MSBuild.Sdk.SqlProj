@@ -5,13 +5,11 @@
 There are a lot of properties that can be set on the model in the resulting `.dacpac` file which can be influenced by setting those properties in the project file using the same name. For example, the snippet below sets the `RecoveryMode` property to `Simple`:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RecoveryMode>Simple</RecoveryMode>
     <SqlServerVersion>SqlAzure</SqlServerVersion>
   </PropertyGroup>
-</Project>
 ```
 
 Refer to the [documentation](https://docs.microsoft.com/dotnet/api/microsoft.sqlserver.dac.model.tsqlmodeloptions) for more details on the available properties. The [SqlServerVersion](https://docs.microsoft.com/dotnet/api/microsoft.sqlserver.dac.model.sqlserverversion) property is also  supported.
@@ -28,12 +26,10 @@ Like `.sqlproj` projects  `MSBuild.Sdk.SqlProj` supports controlling T-SQL build
 Treating warnings as errors can be optionally enabled by adding a property `TreatTSqlWarningsAsErrors` to the project file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
     ...
   </PropertyGroup>
-</Project>
 ```
 
 > [!NOTE]
@@ -44,13 +40,11 @@ Treating warnings as errors can be optionally enabled by adding a property `Trea
 To suppress specific warnings from being treated as errors, add a comma-separated list of warning codes to `SuppressTSqlWarnings` property in the project file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <SuppressTSqlWarnings>71558,71502</SuppressTSqlWarnings>
     <TreatTSqlWarningsAsErrors>True</TreatTSqlWarningsAsErrors>
     ...
   </PropertyGroup>
-</Project>
 ```
 
 ### Suppress warnings for a specific file
@@ -58,7 +52,6 @@ To suppress specific warnings from being treated as errors, add a comma-separate
 You can suppress warnings for a specific file by adding `SuppressTSqlWarnings` for this file:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     ...
   </PropertyGroup>
@@ -68,7 +61,6 @@ You can suppress warnings for a specific file by adding `SuppressTSqlWarnings` f
       <SuppressTSqlWarnings>71502</SuppressTSqlWarnings>
     </Content>
   </ItemGroup>
-</Project>
 ```
 
 > [!NOTE]
@@ -83,7 +75,6 @@ To include these scripts into your `.dacpac` add the following to your `.csproj`
 ### Include deployment scripts
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     ...
   </PropertyGroup>
@@ -92,7 +83,6 @@ To include these scripts into your `.dacpac` add the following to your `.csproj`
     <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
     <PreDeploy Include="Pre-Deployment\Script.PreDeployment.sql" />
   </ItemGroup>
-</Project>
 ```
 
 It is important to note that scripts in the `Pre-Deployment` and `Post-Deployment` folders are excluded from the build process by default. This is because these scripts typically don't define database objects, such as tables and stored procedure, but perform other tasks that cannot be represented in the model. If these aren't excluded your build might break with a SQL46010 error. Instead, you should create a script file that includes all of those scripts using the `:r <path-to-script>.sql` syntax and then reference that script in your project file (as shown above).
@@ -104,7 +94,6 @@ By default the pre- and/or post-deployment script of referenced packages (both [
 ### Run scripts from referenced packages
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
   <PropertyGroup>
     <RunScriptsFromReferences>True</RunScriptsFromReferences>
     ...
@@ -113,7 +102,6 @@ By default the pre- and/or post-deployment script of referenced packages (both [
   <ItemGroup>
     <PackageReference Include="MyDatabasePackage" Version="1.0.0" />
   </ItemGroup>
-</Project>
 ```
 
 ## SQLCMD variables
@@ -123,11 +111,6 @@ Especially when using pre-deployment and post-deployment scripts, but also in ot
 ### Define SQLCMD variables
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
-  <PropertyGroup>
-    ...
-  </PropertyGroup>
-
   <ItemGroup>
     <SqlCmdVariable Include="MySqlCmdVariable">
       <DefaultValue>DefaultValue</DefaultValue>
@@ -138,7 +121,6 @@ Especially when using pre-deployment and post-deployment scripts, but also in ot
       <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
-</Project>
 ```
 
 > [!NOTE]

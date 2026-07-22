@@ -35,7 +35,7 @@ When `--erDiagram true` is specified, the template includes a sample `*_erdiagra
 You should now have a project file with the following contents:
 
 ```xml
-<Project Sdk="MSBuild.Sdk.SqlProj/4.2.0">
+<Project Sdk="MSBuild.Sdk.SqlProj/4.3.0">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <SqlServerVersion>Sql160</SqlServerVersion>
@@ -46,7 +46,7 @@ You should now have a project file with the following contents:
   <ItemGroup>
     <!-- This package adds additional code analysis rules -->
     <!-- We recommend using it, but it can be removed if desired -->
-    <PackageReference Include="ErikEJ.DacFX.SqlServer.Rules" Version="5.0.0">
+    <PackageReference Include="ErikEJ.DacFX.SqlServer.Rules" Version="5.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
