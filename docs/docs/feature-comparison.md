@@ -1,6 +1,5 @@
 # Feature Comparison
 
-
 ## Other approaches
 
 Microsoft provides two other project types, that have features similar to this SDK.
