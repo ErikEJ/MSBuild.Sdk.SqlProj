@@ -58,8 +58,8 @@ The table below shows which IDEs support each of the three project types.
 | IDE | Classic .sqlproj | Microsoft.Build.Sql .sqlproj | MSBuild.Sdk.SqlProj |
 | --- | --- | --- | --- |
 | Visual Studio | Yes | No | Yes (with [SQL Database Projects Power Tools](https://marketplace.visualstudio.com/items?itemName=ErikEJ.SqlDatabaseProjectsPowerTools) extension) |
-| VS Code | No | Yes (with [SQL Database Projects](https://marketplace.visualstudio.com/items?itemName=ms-mssql.sql-database-projects-vscode) extension) | Partial<sup>1</sup> |
+| VS Code | No | Yes (with [SQL Database Projects](https://marketplace.visualstudio.com/items?itemName=ms-mssql.sql-database-projects-vscode) extension) | Partial<sup>5</sup> |
 | SSMS | No | Yes | No |
-| Rider | No | Yes | Partial<sup>1</sup> |
+| Rider | No | Yes | Partial<sup>5</sup> |
 
-1. Can open and build MSBuild.Sdk.SqlProj projects as standard .NET SDK projects, but there is no dedicated SQL tooling or IntelliSense for the `.sql` files.
+5. Can open and build MSBuild.Sdk.SqlProj projects as standard .NET SDK projects, but there is no dedicated SQL tooling or IntelliSense for the `.sql` files.
