@@ -163,6 +163,7 @@
       DropPermissionsNotInSource;
       DropRoleMembersNotInSource;
       DropStatisticsNotInSource;
+      EnableFastComparison;
       ExcludeObjectTypes;
       GenerateSmartDefaults;
       IgnoreAnsiNulls;
@@ -205,6 +206,7 @@
       IgnoreWithNocheckOnForeignKeys;
       IncludeCompositeObjects;
       IncludeTransactionalScripts;
+      LogDeployment;
       LongRunningCommandTimeout;
       NoAlterStatementsToChangeClrTypes;
       PopulateFilesOnFileGroups;
