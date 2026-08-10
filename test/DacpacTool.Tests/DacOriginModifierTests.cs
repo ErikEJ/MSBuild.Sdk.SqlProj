@@ -70,7 +70,7 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
             var originXml = ReadOriginXml(tempFile);
 
             // Assert
-            originXml.ShouldNotContain("<ProjectGuid>");
+            originXml.ShouldNotContain("<ProjectGuid");
 
             // Cleanup
             tempFile.Delete();
