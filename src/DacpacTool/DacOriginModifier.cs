@@ -22,14 +22,9 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool
             _console = console ?? throw new ArgumentNullException(nameof(console));
         }
 
-        public void SetProjectGuid(FileInfo dacpac, Guid projectGuid)
+        public void SetProjectGuid(Package package, Guid projectGuid)
         {
-            ArgumentNullException.ThrowIfNull(dacpac);
-
-            if (!dacpac.Exists)
-            {
-                throw new ArgumentException($"Unable to find package {dacpac.FullName}", nameof(dacpac));
-            }
+            ArgumentNullException.ThrowIfNull(package);
 
             var dacOriginType = ResolveDacOriginType();
 
@@ -54,14 +49,12 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 ?? throw new InvalidOperationException($"Unable to locate the ProjectGuid property on {DacOriginTypeName}.");
 
-            _console.WriteLine($"Setting ProjectGuid {projectGuid} on {OriginPartUri} in {dacpac.FullName}");
-
-            using var package = Package.Open(dacpac.FullName, FileMode.Open, FileAccess.ReadWrite);
+            _console.WriteLine($"Setting ProjectGuid {projectGuid} on {OriginPartUri} in package");
 
             var partUri = new Uri(OriginPartUri, UriKind.Relative);
             if (!package.PartExists(partUri))
             {
-                throw new InvalidOperationException($"Unable to find {OriginPartUri} in package {dacpac.FullName}.");
+                throw new InvalidOperationException($"Unable to find {OriginPartUri} in package.");
             }
 
             var part = package.GetPart(partUri);
@@ -74,7 +67,7 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool
                 originStream.CopyTo(buffer);
                 buffer.Position = 0;
                 dacOrigin = openMethod.Invoke(null, new object[] { buffer })
-                    ?? throw new InvalidOperationException($"Unable to read {OriginPartUri} from package {dacpac.FullName}.");
+                    ?? throw new InvalidOperationException($"Unable to read {OriginPartUri} from package.");
             }
 
             projectGuidProperty.SetValue(dacOrigin, projectGuid);

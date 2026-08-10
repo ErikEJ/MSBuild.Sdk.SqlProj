@@ -39,7 +39,11 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
 
             // Act
             var modifier = new DacOriginModifier(new TestConsole());
-            modifier.SetProjectGuid(tempFile, projectGuid);
+            using (var package = Package.Open(tempFile.FullName, FileMode.Open, FileAccess.ReadWrite))
+            {
+                modifier.SetProjectGuid(package, projectGuid);
+                package.Close();
+            }
 
             // Assert
             var originXml = ReadOriginXml(tempFile);
@@ -50,14 +54,14 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
         }
 
         [TestMethod]
-        public void SetProjectGuid_PackageDoesNotExist_Throws()
+        public void SetProjectGuid_NullPackage_Throws()
         {
             // Arrange
             var modifier = new DacOriginModifier(new TestConsole());
 
             // Act & Assert
-            Should.Throw<ArgumentException>(() =>
-                modifier.SetProjectGuid(new FileInfo("NonExistentPackage.dacpac"), Guid.NewGuid()));
+            Should.Throw<ArgumentNullException>(() =>
+                modifier.SetProjectGuid(null, Guid.NewGuid()));
         }
 
         [TestMethod]
