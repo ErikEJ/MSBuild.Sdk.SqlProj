@@ -156,6 +156,19 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool
             packageBuilder.AddPreDeploymentScript(options.PreDeploy, options.Output);
             packageBuilder.AddPostDeploymentScript(options.PostDeploy, options.Output);
 
+            // Set the ProjectGuid in Origin.xml (must happen after SaveToDisk)
+            if (!string.IsNullOrWhiteSpace(options.ProjectGuid))
+            {
+                if (!Guid.TryParse(options.ProjectGuid, out var projectGuid))
+                {
+                    Console.WriteLine($"ERROR: Invalid ProjectGuid '{options.ProjectGuid}', must be a valid GUID");
+                    return 1;
+                }
+
+                var originModifier = new DacOriginModifier(new ActualConsole());
+                originModifier.SetProjectGuid(options.Output, projectGuid);
+            }
+
             if (options.GenerateCreateScript)
             {
                 var deployOptions = options.ExtractDeployOptions();
