@@ -107,7 +107,7 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
             }
         }
 
-         [TestMethod]
+        [TestMethod]
         [DataRow("PrePlan", true, true, DisplayName = "Pre-plan nested includes")]
         [DataRow("PreDeploy", true, true, DisplayName = "Pre-deployment nested includes")]
         [DataRow("PostDeploy", true, true, DisplayName = "Post-deployment nested includes")]
@@ -154,7 +154,7 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
                     $"-p:BuildingInsideVisualStudio={buildingInsideVisualStudio}",
                     $"-p:DesignTimeBuild={designTimeBuild}",
                     "-p:BuildingProject=false",
-                    $"-p:DacpacToolExe={DacpacToolPath.FilePath}",
+                    $"-p:DacpacToolExe={toolPath}",
                     "-verbosity:quiet");
 
                 using var document = JsonDocument.Parse(output);
@@ -218,7 +218,7 @@ namespace MSBuild.Sdk.SqlProj.DacpacTool.Tests
                     "-restore",
                     "-target:Build",
                     $"-p:CustomBeforeNoTargets={overridesPath}",
-                    $"-p:DacpacToolExe={typeof(Program).Assembly.Location}",
+                    $"-p:DacpacToolExe={DacpacToolPath.FilePath}",
                     "-p:UseArtifactsOutput=true",
                     $"-p:ArtifactsPath={artifactsPath}",
                     "-p:GenerateCreateScript=true",
